@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/ui/themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -19,11 +21,35 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`dark ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+    <ClerkProvider
+      appearance={{
+        theme: dark,
+        variables: {
+          colorBackground: "var(--bg-elevated)",
+          colorForeground: "var(--text-primary)",
+          colorPrimary: "var(--accent-primary)",
+          colorPrimaryForeground: "var(--bg-base)",
+          colorNeutral: "var(--text-primary)",
+          colorMuted: "var(--bg-subtle)",
+          colorMutedForeground: "var(--text-muted)",
+          colorInput: "var(--bg-subtle)",
+          colorInputForeground: "var(--text-primary)",
+          colorBorder: "var(--border-default)",
+          colorDanger: "var(--state-error)",
+          colorSuccess: "var(--state-success)",
+          colorWarning: "var(--state-warning)",
+          borderRadius: "0.625rem",
+          fontFamily: "var(--font-geist-sans)",
+          fontFamilyMono: "var(--font-geist-mono)",
+        },
+      }}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
-    </html>
+      <html
+        lang="en"
+        className={`dark ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      >
+        <body className="min-h-full flex flex-col">{children}</body>
+      </html>
+    </ClerkProvider>
   );
 }
